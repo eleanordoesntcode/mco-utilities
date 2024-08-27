@@ -9,7 +9,7 @@ async def requestmorelog():
 
 def recordchat(text):
     print(text)
-    f = open("log.txt", mode="ax")
+    f = open("log.txt", mode="a+")
     f.write(text)
     f.close()
     return(None)
