@@ -28,3 +28,5 @@ def mainloop():
             lastchunk = newchunk
         if time.time() - starttime < 2:
             time.sleep(2-(time.time() - starttime))
+
+mainloop()
