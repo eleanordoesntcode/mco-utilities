@@ -21,7 +21,7 @@ def mainloop():
     lastchunk = ""
     while True:
         starttime = time.time()
-        newchunk = requestmorelog()
+        newchunk = await requestmorelog()
         if newchunk != lastchunk:
             currdate = time.strftime('%Y-%m-%d %H:%M:%S')
             recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}\n")
