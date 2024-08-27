@@ -17,14 +17,14 @@ def recordchat(text):
 def mainloop():
     # we first initiate the log
     currdate = time.strftime('%Y-%m-%d %H:%M:%S')
-    recordchat(f"[{currdate}] Starting logging")
+    recordchat(f"[{currdate}] Starting logging\n")
     lastchunk = ""
     while True:
         starttime = time.time()
         newchunk = requestmorelog()
         if newchunk != lastchunk:
             currdate = time.strftime('%Y-%m-%d %H:%M:%S')
-            recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}")
+            recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}\n")
             lastchunk = newchunk
         if time.time() - starttime < 2:
             time.sleep(2-(time.time() - starttime))
