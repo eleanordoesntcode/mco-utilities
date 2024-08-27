@@ -1,5 +1,7 @@
 import aiohttp
+import asyncio
 import time
+import html
 
 async def requestmorelog():
     async with aiohttp.ClientSession() as session:
@@ -14,19 +16,21 @@ def recordchat(text):
     f.close()
     return(None)
 
-async def mainloop():
-    # we first initiate the log
-    currdate = time.strftime('%Y-%m-%d %H:%M:%S')
-    recordchat(f"[{currdate}] Starting logging\n")
-    lastchunk = ""
-    while True:
-        starttime = time.time()
-        newchunk = await requestmorelog()
-        if newchunk != lastchunk:
-            currdate = time.strftime('%Y-%m-%d %H:%M:%S')
-            recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}\n")
-            lastchunk = newchunk
-        if time.time() - starttime < 2:
-            time.sleep(2-(time.time() - starttime))
-
-mainloop()
+async def mainloop(lastchunk):
+    starttime = time.time()
+    newchunk = await requestmorelog()
+    newchunk = newchunk.replace("<br />", "")
+    newchunk = html.unescape(newchunk)
+    if newchunk != lastchunk:
+        currdate = time.strftime('%Y-%m-%d %H:%M:%S')
+        recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}\n")
+        lastchunk = newchunk
+    if time.time() - starttime < 2:
+        time.sleep(2-(time.time() - starttime))
+    return(newchunk)
+# we first initiate the log
+currdate = time.strftime('%Y-%m-%d %H:%M:%S')
+recordchat(f"[{currdate}] Starting logging\n")
+lastchunk = ""
+while True:
+    lastchunk = asyncio.run(mainloop(lastchunk))
