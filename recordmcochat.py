@@ -29,4 +29,4 @@ async def mainloop():
         if time.time() - starttime < 2:
             time.sleep(2-(time.time() - starttime))
 
-await mainloop()
+mainloop()
