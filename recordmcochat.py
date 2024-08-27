@@ -14,7 +14,7 @@ def recordchat(text):
     f.close()
     return(None)
 
-def mainloop():
+async def mainloop():
     # we first initiate the log
     currdate = time.strftime('%Y-%m-%d %H:%M:%S')
     recordchat(f"[{currdate}] Starting logging\n")
@@ -29,4 +29,4 @@ def mainloop():
         if time.time() - starttime < 2:
             time.sleep(2-(time.time() - starttime))
 
-mainloop()
+await mainloop()
