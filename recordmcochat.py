@@ -25,7 +25,7 @@ def mainloop(lastchunk):
         recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}")
         lastchunk = newchunk
     else:
-        print(".", end=" ")
+        print(".", end=" ", flush=True)
     if time.time() - starttime < 2:
         time.sleep(2-(time.time() - starttime))
     return(newchunk)
