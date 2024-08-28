@@ -5,7 +5,7 @@ import html
 def requestmorelog():
     r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
     r2 = requests.utils.get_unicode_from_response(r)
-    return(r2.text)
+    return(r2)
 
 def recordchat(text):
     print(text)
