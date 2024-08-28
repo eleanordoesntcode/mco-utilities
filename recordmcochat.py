@@ -1,13 +1,11 @@
-import aiohttp
-import asyncio
+import requests
 import time
 import html
 
-async def requestmorelog():
-    async with aiohttp.ClientSession() as session:
-        async with session.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh') as r:
-            returns = await r.text(encoding="utf-8")
-            return(returns)
+def requestmorelog():
+    r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
+    r2 = requests.utils.get_unicode_from_response(r)
+    return(r2.text)
 
 def recordchat(text):
     print(text)
@@ -16,9 +14,9 @@ def recordchat(text):
     f.close()
     return(None)
 
-async def mainloop(lastchunk):
+def mainloop(lastchunk):
     starttime = time.time()
-    newchunk = await requestmorelog()
+    newchunk = requestmorelog()
     newchunk = newchunk.replace("<br />", "")
     newchunk = html.unescape(newchunk)
     if newchunk != lastchunk:
@@ -27,7 +25,7 @@ async def mainloop(lastchunk):
         recordchat(f"[{currdate}] New chunk recieved:\n{newchunk}")
         lastchunk = newchunk
     else:
-        print(".", end ="")
+        print(".", end=" ")
     if time.time() - starttime < 2:
         time.sleep(2-(time.time() - starttime))
     return(newchunk)
@@ -36,4 +34,4 @@ currdate = time.strftime('%Y-%m-%d %H:%M:%S')
 recordchat(f"[{currdate}] Starting logging")
 lastchunk = ""
 while True:
-    lastchunk = asyncio.run(mainloop(lastchunk))
+    lastchunk = mainloop(lastchunk)
