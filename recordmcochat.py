@@ -2,6 +2,9 @@ import requests
 import time
 import html
 
+delay = 2
+filename = "log.txt"
+
 def requestmorelog():
     r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
     r2 = requests.utils.get_unicode_from_response(r)
@@ -9,7 +12,7 @@ def requestmorelog():
 
 def recordchat(text):
     print(text)
-    f = open("log.txt", mode="a+")
+    f = open(filename, mode="a+")
     f.write(text+"\n")
     f.close()
     return(None)
@@ -26,7 +29,7 @@ def mainloop(lastchunk):
         lastchunk = newchunk
     else:
         print(".", end=" ", flush=True)
-    if time.time() - starttime < 2:
+    if time.time() - starttime < delay:
         time.sleep(2-(time.time() - starttime))
     return(newchunk)
 # we first initiate the log
