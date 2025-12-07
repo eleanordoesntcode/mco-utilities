@@ -6,8 +6,11 @@ delay = 2
 filename = "log.txt"
 
 def requestmorelog():
-    r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
-    r2 = requests.utils.get_unicode_from_response(r)
+    try:
+        r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
+        r2 = requests.utils.get_unicode_from_response(r)
+    except Exception as e:
+        print("An error occured when fetching the log -", repr(e))
     return(r2)
 
 def recordchat(text):
