@@ -9,9 +9,10 @@ def requestmorelog():
     try:
         r = requests.get('https://minecraftonline.com/cgi-bin/tailminecraftlog.sh')
         r2 = requests.utils.get_unicode_from_response(r)
+        return(r2)
     except Exception as e:
         print("An error occured when fetching the log -", repr(e))
-    return(r2)
+        return("")
 
 def recordchat(text):
     print(text)
